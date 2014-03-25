@@ -9,6 +9,7 @@
 #import "DoubleButtonsView.h"
 
 @implementation DoubleButtonsView{
+    // Butons arranged on the view
     UIButton *_button1;
     UIButton *_button2;
 }
@@ -20,21 +21,21 @@
         // Initialization code
         self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         
-        //setup first-top button
+        // setup first-top button
         _button1 = [UIButton buttonWithType:UIButtonTypeSystem];
         _button1.translatesAutoresizingMaskIntoConstraints = NO;
         [_button1 setTitle:@"Button1"
                   forState:UIControlStateNormal];
         [self addSubview:_button1];
         
-        //setup second-botom button
+        // setup second-botom button
         _button2 = [UIButton buttonWithType:UIButtonTypeSystem];
         _button2.translatesAutoresizingMaskIntoConstraints = NO;
         [_button2 setTitle:@"Button2"
                   forState:UIControlStateNormal];
         [self addSubview:_button2];
         
-        //setup constraints
+        // setup constraints
         [self setupConstraints];
     }
     return self;
@@ -46,17 +47,25 @@
 }
 
 - (void)setupConstraints{
+    // NSDictionary with views
     NSDictionary *views = NSDictionaryOfVariableBindings(_button1, _button2);
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_button1(>=50)]-10-|"
+    // Defining constraints in plain Visual Format Language
+    NSString * const kFirstButtonHorizontal = @"H:|-10-[_button1(>=50)]-10-|";
+    NSString * const kSecondButtonHorizontal = @"H:|-10-[_button2(>=50)]-10-|";
+    NSString * const kButtonsVertical = @"V:|-10-[_button1(==22)]-(>=10)-[_button2(==_button1)]-10-|";
+    
+    // Horizontal constraints
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kFirstButtonHorizontal
                                                                  options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllCenterY
                                                                  metrics:0
                                                                    views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_button2(>=50)]-10-|"
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kSecondButtonHorizontal
                                                                  options:NSLayoutFormatAlignAllBottom | NSLayoutFormatAlignAllCenterY
                                                                  metrics:0
                                                                    views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_button1(==22)]-(>=10)-[_button2(==_button1)]-10-|"
+    // Vertical constraints
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kButtonsVertical
                                                                  options:NSLayoutFormatAlignAllLeft
                                                                  metrics:0
                                                                    views:views]];

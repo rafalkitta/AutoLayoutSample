@@ -18,6 +18,7 @@
     if (self) {
         // Initialization code
         
+        // Setup views
         _view1 = [[UIView alloc] init];
         _view1.translatesAutoresizingMaskIntoConstraints = NO;
         _view1.backgroundColor = [UIColor redColor];
@@ -38,7 +39,7 @@
         _view4.backgroundColor = [UIColor yellowColor];
         [self addSubview:_view4];
         
-//        [self setNeedsUpdateConstraints];
+        // setup constraints
         [self setupConstraints];
         
     }
@@ -51,22 +52,30 @@
 }
 
 - (void)setupConstraints{
-    
+    // NSDictionary with views
     NSDictionary *views = NSDictionaryOfVariableBindings(_view1, _view2, _view3, _view4);
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_view1(>=100)]-20-[_view2(==_view1)]-20-|"
+    // Defining constraints in plain Visual Format Language
+    NSString * const kFirstAndSecondViewHorizontal = @"H:|-20-[_view1(>=100)]-20-[_view2(==_view1)]-20-|";
+    NSString * const kThirdAndFourthViewHorizontal = @"H:|-20-[_view3(>=100)]-20-[_view4(==_view3)]-20-|";
+    NSString * const kFirstAndThirdViewVertical = @"V:|-20-[_view1(>=100)]-20-[_view3(==_view1)]-80-|";
+    NSString * const kSecondAndFourthViewVetical = @"V:|-20-[_view2(>=100)]-20-[_view4(==_view2)]-80-|";
+    
+    // Horizontal constraints
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kFirstAndSecondViewHorizontal
                                                                  options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllCenterY
                                                                  metrics:0
                                                                    views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_view3(>=100)]-20-[_view4(==_view3)]-20-|"
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kThirdAndFourthViewHorizontal
                                                                  options:NSLayoutFormatAlignAllBottom | NSLayoutFormatAlignAllCenterY
                                                                  metrics:0
                                                                    views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_view1(>=100)]-20-[_view3(==_view1)]-80-|"
+    // Vertical constraints
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kFirstAndThirdViewVertical
                                                                  options:NSLayoutFormatAlignAllLeft
                                                                  metrics:0
                                                                    views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_view2(>=100)]-20-[_view4(==_view2)]-80-|"
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kSecondAndFourthViewVetical
                                                                  options:NSLayoutFormatAlignAllLeft
                                                                  metrics:0
                                                                    views:views]];

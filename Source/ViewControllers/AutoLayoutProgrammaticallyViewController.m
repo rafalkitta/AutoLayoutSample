@@ -32,6 +32,7 @@
     // save weak referance
     _view = view;
     
+    // loading buttons inwards views(sqares)
     [self loadButtonsView];
 
 }
